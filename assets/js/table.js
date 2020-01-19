@@ -65,7 +65,7 @@ function makeBMSTable(info, mark) {
             if (day < 10) {
                 day = "0" + day;
             }
-            $("<td width='5%'>" + year + "." + "" + month + "." + "" + day + "." + "</td>").appendTo(str);
+            $("<td width='5%'>" + year + "." + "" + month + "." + "" + day + "</td>").appendTo(str);
         } else {
             $("<td width='5%'>Undefined</td>").appendTo(str);
         }
