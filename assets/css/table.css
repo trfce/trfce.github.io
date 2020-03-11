@@ -47,7 +47,7 @@ color: #222222;
 padding: 0.75em 0.75em;
 text-align: center;
 vertical-align: middle;
-font-size: 14px;
+font-size: 1em;
 }
 
 .tableflame table th {
@@ -69,7 +69,7 @@ border-bottom: solid 2px #00000026;
 .tableflame table tfoot {
 border-top: solid 2px #ffffff26;
 }
-			
+
 .tableflame a:visited {
 color:#0000c0;
 }
@@ -87,13 +87,13 @@ background-color:#8888ff;
 }
 
 .tableflame tr,a {
- /*Firefoxå‘ã‘*/
+ /*Firefox向け*/
 -moz-transition-property: color, background-color;
 -moz-transition-duration:0.2s;
-/*Chromeã€Safariå‘ã‘*/
+/*Chrome、Safari向け*/
 -webkit-transition-property: color, background-color;
 -webkit-transition-duration:0.2s;
-/*Operaå‘ã‘*/
+/*Opera向け*/
 -o-transition-property: color, background-color;
 -o-transition-duration:0.2s;
 transition-property: color, background-color;

@@ -48,7 +48,8 @@
 							<h1>Triforce</h1>
 							<p>BMS Insane level player and Pattern Maker.</p>
 							<ul class="actions">
-								<li><a href="#one" class="button scrolly">Go Sheets</a><a href="wtf.html" class="button scrolly">World Training Festival</a></li>
+								<li><a href="#one" class="button scrolly">Go Sheets</a>
+								<br><br><a href="wtf.html" class="button">World Training Festival</a></li>
 							</ul>
 						</div>
 					</section>
@@ -62,7 +63,7 @@
 							<br><br>
 							<textarea name="changelog" id="changelog" cols="40" rows="6" readonly></textarea><br>
 								<div class="table-wrapper tableflame">
-									<table align="center" class="tablesorter">
+									<table class="tablesorter">
 									<thead><tr><th width="5%">Lv ↕</th><th width="5%">Movie</th><th width="20%">Title ↕</th><th width="17%">Artist ↕</th><th width="7%">Update ↕</th><th width="3%">DL</th><th width="3%">Score</th><th width="23%">Comment ↕</th></tr></thead>
 									<tbody id="table_int"></tbody>
 									</table>
@@ -113,9 +114,9 @@
 					<section id="three" class="wrapper style1 fade-up">
 						<div class="inner">
 							<h2>Contact</h2>
-							<p>패턴을 타 무료 리듬게임에 복사하는 행위(소위 컨버팅)에 대해서는 제작자 본인(Triforce) 제작임을 명시하는 조건에서 항시 허가합니다.</p>
-							<p>단지, 제가 허가하는 범위는 어디까지나 패턴에 한정되기에, 곡이 필요한 경우에는 작곡가와 연락하시는 것을 당부드립니다.</p>
-							<p>이외의 연락이 필요한 경우에는 아래의 SNS를 이용해주시기 바랍니다.</p>
+							<p>패턴을 타 무료 리듬게임에 복사하는 행위(소위 컨버팅)에 대해서는 제작자 본인(Triforce) 제작임을 명시하는 조건에서 항시 허가합니다.<br>
+							단지, 제가 허가하는 범위는 어디까지나 패턴에 한정되기에, 곡이 필요한 경우에는 작곡가와 연락하시는 것을 당부드립니다.<br>
+							이외의 연락이 필요한 경우에는 아래의 SNS를 이용해주시기 바랍니다.</p>
 							<div class="style1">
 								<section>
 									<ul class="contact">
@@ -159,16 +160,12 @@
 			<script src="assets/js/table.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
 			<script>
-			$(function(){
+			$(function() {
 				$("#changelog").load("change.txt");
 			});
-			
+
 			function showlog() {
-				if ($('#changelog').css('display') == 'none') {
-					$('#changelog').show();
-				} else {
-					$('#changelog').hide();
-				}
+				$("#changelog").toggle()
 			}
 			</script>
 			<script> $(window).resize(function(){resizeYoutube();}); $(function(){resizeYoutube();}); function resizeYoutube(){ $("iframe").each(function(){ if( /^https?:\/\/www.youtube.com\/embed\//g.test($(this).attr("src")) ){ $(this).css("width","100%"); $(this).css("height",Math.ceil( parseInt($(this).css("width")) * 480 / 854 ) + "px");} }); } </script>
