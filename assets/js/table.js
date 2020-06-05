@@ -1,11 +1,29 @@
 //Difficulty Table
-$(document).ready(function(){
-	$.getJSON($("meta[name=bmstable]").attr("content"), function(header){
-		$.getJSON(header.data_url, function(information){
-			makeBMSTable(information,header.symbol);
-			$(".tablesorter").tablesorter({sortList: [[4,1],[0,0]] });
-		});
-	});
+$(document).ready(function() {
+    $.getJSON($("meta[name=bmstable]").attr("content"), function(header) {
+        $.getJSON(header.data_url, function(information) {
+            makeBMSTable(information, header.symbol);
+            $(".tablesorter").tablesorter({
+                sortList: [
+                    [4, 1],
+                    [0, 0]
+                ]
+            });
+        });
+        // Changelog
+        $(function() {
+            $("#changelog").load("change.txt");
+            $('#show_log').click(function() {
+                if ($("#changelog").css("display") == "none" && $(this).html() == "VIEW CHANGELOG") {
+                    $("#changelog").show();
+                    $(this).html("HIDE CHANGELOG");
+                } else {
+                    $("#changelog").hide();
+                    $(this).html("VIEW CHANGELOG");
+                }
+            });
+        });
+    });
 });
 
 function makeBMSTable(info, mark) {

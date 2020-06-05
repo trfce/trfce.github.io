@@ -59,7 +59,7 @@
 						
 							<div class="inner">
 							<h2>Triforce Pattern Table</h2>
-								<button id="show_log" class="button small" onclick="showlog()">View Changelog</button></li>
+								<button id="show_log" class="button small">VIEW CHANGELOG</button></li>
 							<br><br>
 							<textarea name="changelog" id="changelog" cols="40" rows="6" readonly></textarea><br>
 								<div class="table-wrapper tableflame">
@@ -151,6 +151,7 @@
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
+            <script>$(window).resize(function(){resizeYoutube();}); $(function(){resizeYoutube();}); function resizeYoutube(){ $("iframe").each(function(){ if( /^https?:\/\/www.youtube.com\/embed\//g.test($(this).attr("src")) ){ $(this).css("width","100%"); $(this).css("height",Math.ceil( parseInt($(this).css("width")) * 480 / 854 ) + "px");} }); }</script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
 			<script src="assets/js/jquery.scrolly.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
@@ -159,16 +160,15 @@
 			<script src="assets/js/main.js"></script>
 			<script src="assets/js/table.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
-			<script>
-			$(function() {
-				$("#changelog").load("change.txt");
-			});
+            <!-- Global site tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164243361-3"</script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
 
-			function showlog() {
-				$("#changelog").toggle()
-			}
-			</script>
-			<script> $(window).resize(function(){resizeYoutube();}); $(function(){resizeYoutube();}); function resizeYoutube(){ $("iframe").each(function(){ if( /^https?:\/\/www.youtube.com\/embed\//g.test($(this).attr("src")) ){ $(this).css("width","100%"); $(this).css("height",Math.ceil( parseInt($(this).css("width")) * 480 / 854 ) + "px");} }); } </script>
+              gtag('config', 'UA-164243361-3');
+            </script>
 
 	</body>
 </html>
