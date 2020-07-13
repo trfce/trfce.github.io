@@ -1,8 +1,13 @@
-//Difficulty Table
+// Table Load Message
+$(".tableflame").append("<div id='tableLoading'>Loading...</div>");
+
+// Difficulty Table
 $(document).ready(function() {
     $.getJSON($("meta[name=bmstable]").attr("content"), function(header) {
+        makeChangelog();
         $.getJSON(header.data_url, function(information) {
             makeBMSTable(information, header.symbol);
+            $("#tableLoading").remove();
             $(".tablesorter").tablesorter({
                 sortList: [
                     [4, 1],
@@ -10,22 +15,24 @@ $(document).ready(function() {
                 ]
             });
         });
-        // Changelog
-        $(function() {
-            $("#changelog").load("change.txt");
-            $('#show_log').click(function() {
-                if ($("#changelog").css("display") == "none" && $(this).html() == "VIEW CHANGELOG") {
-                    $("#changelog").show();
-                    $(this).html("HIDE CHANGELOG");
-                } else {
-                    $("#changelog").hide();
-                    $(this).html("VIEW CHANGELOG");
-                }
-            });
-        });
     });
 });
 
+// Changelog
+function makeChangelog() {
+    $("#changelog").load("change.txt");
+    $("#show_log").click(function() {
+        if ($("#changelog").css("display") == "none" && $(this).html() == "VIEW CHANGELOG") {
+            $("#changelog").show();
+            $(this).html("HIDE CHANGELOG");
+        } else {
+            $("#changelog").hide();
+            $(this).html("VIEW CHANGELOG");
+        }
+    });
+}
+
+// BMS Table
 function makeBMSTable(info, mark) {
     var x = "";
     var ev = "";
@@ -33,6 +40,7 @@ function makeBMSTable(info, mark) {
     var obj = $("#table_int");
     // 表のクリア
     obj.html("");
+    $("<thead><tr><th width='5%'>Lv ↕</th><th width='5%'>Movie</th><th width='20%'>Title ↕</th><th width='17%'>Artist ↕</th><th width='7%'>Update ↕</th><th width='3%'>DL</th><th width='3%'>Score</th><th width='23%'>Comment ↕</th></tr></thead><tbody></tbody>").appendTo(obj);
     var obj_sep = null;
     for (var i = 0; i < info.length; i++) {
         if (x != info[i].level) {
@@ -48,7 +56,7 @@ function makeBMSTable(info, mark) {
             str = $("<tr class='tr_update'></tr>");
         }
         // レベル表記
-        $("<td width='3%'>" + mark + x + "</td>").appendTo(str);
+        $("<td width='5%'>" + mark + x + "</td>").appendTo(str);
         // Youtube差分動画
         if (info[i].movie_link != "") {
             $("<td width='3%'><a href='" + info[i].movie_link + "' class='icon brands fa-2x fa-youtube' target='_blank'></a></td>").appendTo(str);
@@ -83,9 +91,9 @@ function makeBMSTable(info, mark) {
             if (day < 10) {
                 day = "0" + day;
             }
-            $("<td width='5%'>" + year + "." + "" + month + "." + "" + day + "</td>").appendTo(str);
+            $("<td width='7%'>" + year + "." + "" + month + "." + "" + day + "</td>").appendTo(str);
         } else {
-            $("<td width='5%'>Undefined</td>").appendTo(str);
+            $("<td width='7%'>Undefined</td>").appendTo(str);
         }
         // 差分
         if (info[i].url_diff != "") {
