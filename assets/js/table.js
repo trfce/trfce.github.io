@@ -40,7 +40,7 @@ function makeBMSTable(info, mark) {
     var obj = $("#table_int");
     // 表のクリア
     obj.html("");
-    $("<thead><tr><th width='5%'>Lv ↕</th><th width='5%'>Movie</th><th width='20%'>Title ↕</th><th width='17%'>Artist ↕</th><th width='7%'>Update ↕</th><th width='3%'>DL</th><th width='3%'>Score</th><th width='23%'>Comment ↕</th></tr></thead><tbody></tbody>").appendTo(obj);
+    $("<thead><tr><th width='5%'>Lv <i class='fas fa-arrows-alt-v'></i></th><th width='5%'>Movie</th><th width='20%'>Title <i class='fas fa-arrows-alt-v'></i></th><th width='17%'>Artist <i class='fas fa-arrows-alt-v'></i></th><th width='7%'>Update <i class='fas fa-arrows-alt-v'></i></th><th width='3%'>DL</th><th width='3%'>Score</th><th width='23%'>Comment <i class='fas fa-arrows-alt-v'></i></th></tr></thead><tbody></tbody>").appendTo(obj);
     var obj_sep = null;
     for (var i = 0; i < info.length; i++) {
         if (x != info[i].level) {
