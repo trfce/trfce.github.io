@@ -1,4 +1,7 @@
-﻿(2020.12.15) Pattern Update
+﻿(2021.01.24) Pattern Update
+- untitled tr.18553
+
+(2020.12.15) Pattern Update
 - NightTheater [Thriller]
 - NightTheater [Horror]
 
