@@ -1,4 +1,7 @@
-﻿(2021.04.25) Pattern Modified.
+﻿(2021.08.09) Pattern Modified.
+- Bliss [Nemesis]
+
+(2021.04.25) Pattern Modified.
 - DistortedIntelligence [AntiArea]
 
 (2021.04.25) Pattern Updated.
