@@ -1,10 +1,15 @@
 // Table Load Message
 $(".tableflame").append("<div id='tableLoading'>Loading...</div>");
+$("#video_int").append("<div id='tableLoading2'>Loading...</div>");
 
 // Difficulty Table
 $(document).ready(function() {
     $.getJSON($("meta[name=bmstable]").attr("content"), function(header) {
         makeChangelog();
+        $.getJSON(header.video_url, function(videoinfo) {
+            makeAUTOPLAY(videoinfo);
+            $("#tableLoading2").remove();
+        });
         $.getJSON(header.data_url, function(information) {
             makeBMSTable(information, header.symbol);
             $("#tableLoading").remove();
@@ -20,14 +25,16 @@ $(document).ready(function() {
 
 // Changelog
 function makeChangelog() {
-    $("#changelog").load("change.txt");
-    $("#show_log").click(function() {
-        if ($("#changelog").css("display") == "none" && $(this).html() == "VIEW CHANGELOG") {
-            $("#changelog").show();
-            $(this).html("HIDE CHANGELOG");
+    var $changelog = $("#changelog");
+    var $show_log = $("#show_log");
+    $changelog.load("change.txt");
+    $show_log.click(function() {
+        if ($changelog.css("display") == "none" && $show_log.html() == "VIEW CHANGELOG") {
+            $changelog.show();
+            $show_log.html("HIDE CHANGELOG");
         } else {
-            $("#changelog").hide();
-            $(this).html("VIEW CHANGELOG");
+            $changelog.hide();
+            $show_log.html("VIEW CHANGELOG");
         }
     });
 }
@@ -59,7 +66,7 @@ function makeBMSTable(info, mark) {
         $("<td width='5%'>" + mark + x + "</td>").appendTo(str);
         // Youtube差分動画
         if (info[i].movie_link != "") {
-            $("<td width='3%'><a href='" + info[i].movie_link + "' class='icon brands fa-2x fa-youtube' target='_blank'></a></td>").appendTo(str);
+            $("<td width='3%'><a href='https://www.youtube.com/watch?v=" + info[i].movie_link.slice(-11) + "' class='icon brands fa-2x fa-youtube' target='_blank'></a></td>").appendTo(str);
         } else {
             $("<td width='3%'><a href='javascript:void(0)' class='icon brands fa-2x fa-youtube'></td>").appendTo(str);
         }
@@ -117,5 +124,24 @@ function makeBMSTable(info, mark) {
         str.appendTo(obj);
         count++;
 
+    }
+}
+
+function makeAUTOPLAY(info2) {
+    var video_obj = $("#video_int");
+    video_obj.html("");
+    for (var i = 0; i < info2.length; i++) {
+        var str = $("<section></section>");
+        if (info2[i].video_title != "") {
+            $("<span class='icon solid major brands fa-youtube'></span><h3>" + info2[i].video_title + "</h3>").appendTo(str);
+        } else {
+            $("<h3>Nothing</h3>").appendTo(str);
+        }
+        if (info2[i].movie_link != "") {
+            $("<p class='video_wrap'>" + "<iframe src='https://www.youtube.com/embed/" + info2[i].movie_link.slice(-11) + "' srcdoc='<style>*{padding:0;margin:0;overflow:hidden}html,body{height:100%}img,span{position:absolute;width:100%;top:0;bottom:0;margin:auto}span{height:1.5em;text-align:center;font:48px/1.5 sans-serif;color:white;text-shadow:0 0 0.5em black}</style><a href=https://www.youtube.com/embed/" + info2[i].movie_link.slice(-11) + "?autoplay=1><img src=https://img.youtube.com/vi/" + info2[i].movie_link.slice(-11) + "/hqdefault.jpg><span>▶</span></a>' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>" + "</p>").appendTo(str);
+        } else {
+            $("<p>Nothing</p>").appendTo(str);
+        }
+        str.appendTo(video_obj);
     }
 }
