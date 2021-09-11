@@ -11,7 +11,7 @@
   height: 100%;
 }
 
-#tableLoading, #tableLoading2 {
+.table_load_message {
   font-weight: 500;
   font-size: 1.2em;
   text-align: center;
