@@ -6,11 +6,9 @@ $(document).ready(function () {
 
   $.getJSON($("meta[name=bmstable]").attr("content"), function (header) {
     makeChangelog();
-    $.getJSON(header.video_url, function (videoinfo) {
-      makeAUTOPLAY(videoinfo);
-    });
     $.getJSON(header.data_url, function (information) {
       makeBMSTable(information, header.symbol);
+      makeAUTOPLAY(information);
       $(".table_load_message").remove();
       $(".tablesorter").tablesorter({
         sortList: [
@@ -43,9 +41,6 @@ function makeChangelog() {
 
 // BMS Table
 function makeBMSTable(info, mark) {
-  var x = "";
-  var ev = "";
-  var count = 0;
   var obj = $("#table_int");
   // Table Clear
   obj.html("");
@@ -80,27 +75,22 @@ function makeBMSTable(info, mark) {
       "</thead>" +
       "<tbody></tbody>"
   ).appendTo(obj);
-  var obj_sep = null;
-  for (var i = 0; i < info.length; i++) {
-    if (x != info[i].level) {
-      count = 0;
-      x = info[i].level;
-    }
+  info.forEach((i) => {
     // Main
     var str = $("<tr class='tr_normal'></tr>");
-    if (info[i].state == 1) {
+    if (i.state == 1) {
       str = $("<tr class='tr_new'></tr>");
     }
-    if (info[i].state == 2) {
+    if (i.state == 2) {
       str = $("<tr class='tr_update'></tr>");
     }
     // Level
-    $("<td width='5%'>" + mark + x + "</td>").appendTo(str);
+    $("<td width='5%'>" + mark + i.level + "</td>").appendTo(str);
     // YouTube
-    if (info[i].movie_link) {
+    if (i.movie_link) {
       $(
         "<td width='3%'><a href='https://www.youtube.com/watch?v=" +
-          info[i].movie_link.slice(-11) +
+          i.movie_link.slice(-11) +
           "' class='icon brands fa-2x fa-youtube' target='_blank'></a></td>"
       ).appendTo(str);
     } else {
@@ -112,63 +102,58 @@ function makeBMSTable(info, mark) {
     $(
       "<td width='20%'>" +
         "<a href='http://www.dream-pro.info/~lavalse/LR2IR/search.cgi?mode=ranking&bmsmd5=" +
-        info[i].md5 +
+        i.md5 +
         "' target='_blank'>" +
-        info[i].title +
+        i.title +
         "</a></td>"
     ).appendTo(str);
     // Artist
     var astr = "";
-    if (info[i].url != "入手困難") {
-      if (info[i].artist) {
-        astr = "<a href='" + info[i].url + "'>" + info[i].artist + "</a>";
+    if (i.url != "入手困難") {
+      if (i.artist) {
+        astr = "<a href='" + i.url + "'>" + i.artist + "</a>";
       } else {
-        astr = "<a href='" + info[i].url + "'>" + info[i].url + "</a>";
+        astr = "<a href='" + i.url + "'>" + i.url + "</a>";
       }
     } else {
-      if (info[i].artist) {
-        astr = info[i].artist + " (入手困難)";
+      if (i.artist) {
+        astr = i.artist + " (入手困難)";
       }
     }
     $("<td width='17%'>" + astr + "</td>").appendTo(str);
     // Date
-    if (info[i].date != "undefined") {
-      var addDate = new Date(info[i].date);
-      var year = addDate.getFullYear();
-      var month = addDate.getMonth() + 1;
-      var day = addDate.getDate();
-      if (month < 10) {
-        month = "0" + month;
-      }
-      if (day < 10) {
-        day = "0" + day;
-      }
-      $(
-        "<td width='7%'>" + year + "." + "" + month + "." + "" + day + "</td>"
-      ).appendTo(str);
+    if (i.date != "undefined") {
+      var addDate = new Date(i.date);
+      var dateStr =
+        addDate.getFullYear() +
+        "." +
+        ("0" + (addDate.getMonth() + 1)).slice(-2) +
+        "." +
+        ("0" + addDate.getDate()).slice(-2);
+      $("<td width='7%'>" + dateStr + "</td>").appendTo(str);
     } else {
       $("<td width='7%'>Undefined</td>").appendTo(str);
     }
     // Chart
-    if (info[i].url_diff) {
-      if (info[i].name_diff) {
+    if (i.url_diff) {
+      if (i.name_diff) {
         $(
           "<td width='3%'><a href='" +
-            info[i].url_diff +
+            i.url_diff +
             "' target='_blank'>" +
-            info[i].name_diff +
+            i.name_diff +
             "</a></td>"
         ).appendTo(str);
       } else {
         $(
           "<td width='3%'><a href='" +
-            info[i].url_diff +
+            i.url_diff +
             "' class='fas fa-lg fa-arrow-down'></a></td>"
         ).appendTo(str);
       }
     } else {
-      if (info[i].name_diff) {
-        $("<td width='3%'>'" + info[i].name_diff + "'</td>").appendTo(str);
+      if (i.name_diff) {
+        $("<td width='3%'>'" + i.name_diff + "'</td>").appendTo(str);
       } else {
         $("<td width='3%'>同梱</td>").appendTo(str);
       }
@@ -176,37 +161,46 @@ function makeBMSTable(info, mark) {
     // Score
     $(
       "<td width='3%'><a href='http://www.ribbit.xyz/bms/score/view?md5=" +
-        info[i].md5 +
+        i.md5 +
         "' class='fas fa-lg fa-music' target='_blank'></a></td>"
     ).appendTo(str);
 
     // Comment
-    $("<td width='23%'>" + info[i].comment + "</td>").appendTo(str);
+    $("<td width='23%'>" + i.comment + "</td>").appendTo(str);
     str.appendTo(obj);
-    count++;
-  }
+  });
 }
 
 // AUTOPLAY List
 function makeAUTOPLAY(info) {
-  var video_obj = $("#video_int");
-  video_obj.html("");
-  for (var i = 0; i < info.length; i++) {
+  var videoObj = $("#video_int");
+  videoObj.html("");
+  var newInfo = info
+    .filter(function (info) {
+      return !!info.date && info.movie_link;
+    })
+    .sort(function (a, b) {
+      var aDate = new Date(a.date);
+      var bDate = new Date(b.date);
+      return aDate < bDate ? 1 : aDate > bDate ? -1 : 0;
+    })
+    .slice(0, 6);
+  newInfo.forEach((i) => {
     var str = $("<section></section>");
-    if (info[i].video_title) {
+    if (i.title) {
       $(
         "<span class='icon solid major brands fa-youtube'></span><h3>" +
-          info[i].video_title +
+          i.title +
           "</h3>"
       ).appendTo(str);
     } else {
       $("<h3>Nothing</h3>").appendTo(str);
     }
-    if (info[i].movie_link) {
+    if (i.movie_link) {
       $(
         "<p class='video_wrap'>" +
           "<iframe src='https://www.youtube.com/embed/" +
-          info[i].movie_link.slice(-11) +
+          i.movie_link.slice(-11) +
           "' srcdoc='" +
           "<style>" +
           "* {" +
@@ -233,10 +227,10 @@ function makeAUTOPLAY(info) {
           "}" +
           "</style>" +
           "<a href=https://www.youtube.com/embed/" +
-          info[i].movie_link.slice(-11) +
+          i.movie_link.slice(-11) +
           "?autoplay=1>" +
           "<img src=https://img.youtube.com/vi/" +
-          info[i].movie_link.slice(-11) +
+          i.movie_link.slice(-11) +
           "/hqdefault.jpg>" +
           "<span>▶</span>" +
           "</a>" +
@@ -247,6 +241,6 @@ function makeAUTOPLAY(info) {
     } else {
       $("<p>Nothing</p>").appendTo(str);
     }
-    str.appendTo(video_obj);
-  }
+    str.appendTo(videoObj);
+  });
 }
