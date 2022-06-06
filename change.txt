@@ -1,4 +1,7 @@
-﻿(2022.05.21) Pattern added.
+﻿(2022.06.07) Pattern fixed.
+- Engine [V8]
+
+(2022.05.21) Pattern added.
 - 馴鹿之骸 [x2]
 
 (2022.05.11) Pattern revised.
